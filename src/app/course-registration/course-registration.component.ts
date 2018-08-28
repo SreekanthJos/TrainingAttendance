@@ -29,6 +29,7 @@ export class CourseRegistrationComponent implements OnInit {
     this.service.GetCourses().subscribe(data => {
         if (data.length > 0)
           this.courses = data[0].CourseName;
+          console.log(this.courses);
       });
   }
 

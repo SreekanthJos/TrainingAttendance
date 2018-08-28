@@ -36,7 +36,9 @@ export class TakeAttendanceComponent implements OnInit {
       this.employees.forEach(element => {
         element.IsPresent = false;
       });
+      console.log(this.employees);
     });
+    
   }
   SaveAttendance(): void {
     let sDate = new Date().toLocaleDateString();

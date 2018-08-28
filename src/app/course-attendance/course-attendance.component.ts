@@ -16,7 +16,9 @@ export class CourseAttendanceComponent implements OnInit {
   attendees: Attendees[];
   firebaseDB: AngularFirestore;
   filterDate: string;
-  email:string;
+  email: string;
+  IsEdit: boolean = false;
+  editIndex: number;
   constructor(private af: AngularFirestore, public service: AttendanceService) {
 
     this.firebaseDB = af;
@@ -28,18 +30,18 @@ export class CourseAttendanceComponent implements OnInit {
   }
 
   FilterByDate(fdate: string) {
-   
+
     if (fdate != "")
       this.service.FilterByDate(fdate).subscribe(data => {
         this.attendees = data;
       });
-    else 
+    else
       this.GetCourseAttendance();
   }
 
 
   FilterByEmail(email: string) {
-   
+
     if (email != "")
       this.service.FilterByEmail(email).subscribe(data => {
         this.attendees = data;
@@ -48,9 +50,21 @@ export class CourseAttendanceComponent implements OnInit {
       this.GetCourseAttendance();
   }
   GetCourseAttendance() {
-    
+
     this.service.GetCourseAttendance().subscribe(data => {
       this.attendees = data.sort((a, b) => a.SessionDate > b.SessionDate ? 1 : -1)
+      console.log(this.attendees);
     });
+    
+  }
+
+  edit(atn: Attendees, i: number) {
+    this.IsEdit = true;
+    this.editIndex = i;
+    console.log(atn);
+  }
+  cancel() {
+    this.IsEdit = false;
+    this.editIndex = -1;
   }
 }

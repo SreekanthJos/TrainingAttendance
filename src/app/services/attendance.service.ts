@@ -1,12 +1,15 @@
 import { Injectable,Output } from '@angular/core';
-import { AngularFirestore } from 'angularfire2/firestore';
+import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
 import { Observable, Subject } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { Employee, Attendees } from '../models/attendance.model';
 import { UrlConstants } from '../models/url-constants.model'
 @Injectable()
 export class AttendanceService {
 
   firebaseDB: AngularFirestore;
+  services: Observable<Attendees[]>;
+  servicesCollection: AngularFirestoreCollection<Attendees>;
   constructor(private af: AngularFirestore) {
     this.firebaseDB = af;
    }
@@ -16,8 +19,15 @@ export class AttendanceService {
     return this.firebaseDB.collection<any>(UrlConstants.Courses).valueChanges();
   }
 
-  GetCourseAttendance(): Observable<Attendees[]> {
-    return this.firebaseDB.collection<Attendees>(UrlConstants.Attendees).valueChanges();
+  GetCourseAttendance():Observable<Attendees[]> {
+    this.servicesCollection=this.firebaseDB.collection<Attendees>(UrlConstants.Attendees);
+    return this.services = this.servicesCollection.snapshotChanges().pipe(map(changes => {
+			return changes.map(a => {
+				const data = a.payload.doc.data() as Attendees;
+				data.Id = a.payload.doc.id;
+				return data;
+			});
+		}));
   }
 
   GetAttendeesListForTraining(): Observable<Employee[]> {
