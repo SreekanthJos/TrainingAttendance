@@ -12,7 +12,7 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AttendanceService } from './services/attendance.service'
 
 
-import { MatDatepickerModule,MatAutocompleteModule,MatButtonModule,MatSlideToggleModule,MatInputModule,MatNativeDateModule,MatFormFieldModule,MatTabsModule,MatDialogModule } from '@angular/material';
+import {MatCheckboxModule, MatTableModule ,MatDatepickerModule,MatAutocompleteModule,MatButtonModule,MatSlideToggleModule,MatInputModule,MatNativeDateModule,MatFormFieldModule,MatTabsModule,MatDialogModule } from '@angular/material';
 import { DialogComponent } from './dialog/dialog.component';
 import { CourseRegistrationComponent } from './course-registration/course-registration.component';
 import { TakeAttendanceComponent } from './take-attendance/take-attendance.component';
@@ -40,7 +40,9 @@ import { CourseAttendanceComponent } from './course-attendance/course-attendance
     MatDatepickerModule,
     MatNativeDateModule,
     MatFormFieldModule,
-    MatTabsModule,MatDialogModule
+    MatTabsModule,MatDialogModule,
+    MatTableModule ,
+    MatCheckboxModule
    
 
   ],

@@ -5,7 +5,8 @@ import { FirebaseListObservable } from 'angularfire2/database-deprecated';
 import { DELEGATE_CTOR } from '@angular/core/src/reflection/reflection_capabilities';
 import { MatDatepickerInputEvent } from '@angular/material';
 import { AttendanceService } from '../services/attendance.service'
-
+import { MatTableDataSource, MatSort } from '@angular/material';
+import { DataSource } from '@angular/cdk/table';
 @Component({
   selector: 'app-course-attendance',
   templateUrl: './course-attendance.component.html',
@@ -19,9 +20,13 @@ export class CourseAttendanceComponent implements OnInit {
   email: string;
   IsEdit: boolean = false;
   editIndex: number;
+  dataSource;
+  displayedColumns =['Course', 'Email', 'IsPresent', 'Name','SessionDate','Options'];
+ // columns =['IsPresent', 'Name', 'Email', 'Course','SessionDate'];
   constructor(private af: AngularFirestore, public service: AttendanceService) {
-
+    //this.displayedColumns = ['IsPresent', 'Name', 'Email', 'Course','SessionDate'];
     this.firebaseDB = af;
+   //this.columns=this.displayedColumns;
   }
 
   ngOnInit() {
@@ -53,7 +58,8 @@ export class CourseAttendanceComponent implements OnInit {
 
     this.service.GetCourseAttendance().subscribe(data => {
       this.attendees = data.sort((a, b) => a.SessionDate > b.SessionDate ? 1 : -1)
-      console.log(this.attendees);
+      this.dataSource=new MatTableDataSource(this.attendees);
+      console.log(this.dataSource);
     });
     
   }
