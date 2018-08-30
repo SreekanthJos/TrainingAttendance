@@ -60,7 +60,7 @@
         </tbody>
       </table> -->
 
-
+<div class="example-container">
     <mat-table #table [dataSource]="dataSource">
       <ng-container matColumnDef="Name">
         <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
@@ -92,17 +92,18 @@
       <ng-container matColumnDef="Options">
         <mat-header-cell *matHeaderCellDef></mat-header-cell>
         <mat-cell *matCellDef="let row;let i=index">
-          <a (click)="cancel()" *ngIf="IsEdit==true">
+          <a (click)="cancel()" *ngIf="IsEdit==true && i==editIndex">
                 <span class="glyphicon glyphicon-remove"></span>
               </a>
-          <a (click)="edit(row,i)" *ngIf="IsEdit==false">
+          <a (click)="edit(row,i)" *ngIf="IsEdit==false || i!=editIndex">
                 <span class="glyphicon glyphicon-edit"></span>
               </a>
         </mat-cell>
       </ng-container>
-      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-header-row *matHeaderRowDef="displayedColumns; sticky:true"></mat-header-row>
       <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
 
     </mat-table>
+  </div>
   </div>
 </div>
