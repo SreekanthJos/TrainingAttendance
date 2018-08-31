@@ -31,7 +31,7 @@ export class AttendanceService {
   }
 
   GetAttendeesListForTraining(): Observable<Employee[]> {
-
+   
     return this.firebaseDB.collection<Employee>(UrlConstants.Employees).valueChanges();
   }
 

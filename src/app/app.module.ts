@@ -17,6 +17,9 @@ import { DialogComponent } from './dialog/dialog.component';
 import { CourseRegistrationComponent } from './course-registration/course-registration.component';
 import { TakeAttendanceComponent } from './take-attendance/take-attendance.component';
 import { CourseAttendanceComponent } from './course-attendance/course-attendance.component';
+import { FilterPipe } from './pipes/filter.pipe';
+import { HomeworkComponent } from './homework/homework.component';
+import { HomeworkService } from './services/homework.service';
 @NgModule({
   declarations: [
     AppComponent,
@@ -24,7 +27,9 @@ import { CourseAttendanceComponent } from './course-attendance/course-attendance
     DialogComponent,
     CourseRegistrationComponent,
     TakeAttendanceComponent,
-    CourseAttendanceComponent
+    CourseAttendanceComponent,
+    FilterPipe,
+    HomeworkComponent
   ],
   imports: [
     BrowserModule,
@@ -46,7 +51,7 @@ import { CourseAttendanceComponent } from './course-attendance/course-attendance
    
 
   ],
-  providers: [AngularFirestore,AttendanceService],
+  providers: [AngularFirestore,AttendanceService,HomeworkService],
   bootstrap: [AppComponent],
   entryComponents: [DialogComponent,CourseAttendanceComponent]
 })

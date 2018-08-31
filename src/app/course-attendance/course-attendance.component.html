@@ -10,19 +10,19 @@
       </div>
       <div class="col-sm-2">
         <mat-form-field class="pull-right">
-          <input matInput placeholder="filter by email" [(ngModel)]="email" (input)="FilterByEmail($event.target.value)">
+          <input matInput placeholder="filter by email" [(ngModel)]="searchText">
 
         </mat-form-field>
       </div>
       <div class="col-sm-3">
         <mat-form-field class="pull-right">
-          <input matInput #ref [matDatepicker]="picker" [(ngModel)]="filterDate" placeholder="filter by date" (dateInput)="FilterByDate(ref.value)">
+          <input matInput #ref [matDatepicker]="picker" [(ngModel)]="searchText" placeholder="filter by date" >
           <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
       </div>
     </div>
-    <!-- <table class="table table-striped table-bordered">
+    <table class="table table-striped table-bordered">
         <thead style="color: #fff; background-color: #212529; border-color: #32383e;">
           
           <th>#</th>
@@ -58,10 +58,10 @@
             </td>
           </tr>
         </tbody>
-      </table> -->
+      </table>
 
-<div class="example-container">
-    <mat-table #table [dataSource]="dataSource">
+
+    <!-- <mat-table #table [dataSource]="dataSource | filter:searchText" >
       <ng-container matColumnDef="Name">
         <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
         <mat-cell *matCellDef="let row"><span>{{row.Name}}</span></mat-cell>
@@ -100,10 +100,10 @@
               </a>
         </mat-cell>
       </ng-container>
-      <mat-header-row *matHeaderRowDef="displayedColumns; sticky:true"></mat-header-row>
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
       <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
 
-    </mat-table>
+    </mat-table> -->
   </div>
-  </div>
+  
 </div>
