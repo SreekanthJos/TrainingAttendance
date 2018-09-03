@@ -61,16 +61,27 @@
               <td>{{i+1}}</td>
             <td>{{hw.Name}}</td>
             <td>{{hw.Email}}</td>
+
            <td>
              <table>
-               <tr *ngFor="let hh of arhowrks">
-              <td>{{hh.key}}
-                <input type="checkbox" [checked]="hh.value">
+               <tr *ngFor="let hh of hw.Hworks">
+              <td>{{hh}}
+                <input type="checkbox" [(ngModel)]="hh.value" [checked]="hh.value">
               </td>
                </tr>
              </table>
            </td>
             <td>{{hw.gitrepo}}</td>
+            <td></td>
+            <td>
+                
+                <a (click)="cancel()"  *ngIf="IsEdit==true" >
+                  <span class="glyphicon glyphicon-remove"></span>
+                </a>
+                <a (click)="updateHomework(hw)">
+                  <span class="glyphicon glyphicon-edit"></span>
+                </a>
+              </td>
           </tr>
         </tbody>
       </table>

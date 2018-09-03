@@ -28,4 +28,9 @@ export class EmpHomework {
     Email: string;
     Homeworks: object;
     gitrepo:string;
+    Hworks=new Array<HomeworkObj>();
+}
+export class HomeworkObj{
+name:string;
+status:boolean;
 }

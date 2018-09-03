@@ -9,7 +9,7 @@ import { EmpHomework } from '../models/attendance.model';
 })
 export class HomeworkComponent implements OnInit {
   homeworks: EmpHomework[];
-  arhowrks:any[]=new Array();
+  //arhowrks:any[]=new Array();
   constructor(private hwService: HomeworkService) { }
 
   ngOnInit() {
@@ -20,17 +20,23 @@ export class HomeworkComponent implements OnInit {
       
       this.homeworks = res;
       for (var index = 0; index < this.homeworks.length; index++) {
-        var hw = JSON.stringify(this.homeworks[index].Homeworks);
-        JSON.parse(hw,(key,value)=>{
-         if(key!="") this.arhowrks.push({"key":key,"value":value});
-        })
+        //this.homeworks[index].HwCollection=new Array();
+        //var hw = JSON.stringify(this.homeworks[index].Homeworks);
+        //JSON.parse(hw,(key,value)=>{
+        // if(key!="") this.homeworks[index].HwCollection.push({"key":key,"value":value});
+        //})
         
       }
-      console.log(this.arhowrks);
+     // console.log(this.arhowrks);
+     console.log(this.homeworks[0].Hworks[0].name);
     });
+  
   }
 
   updateHomework(emphw: EmpHomework) {
-    this.hwService.saveEmpHomework(emphw);
+
+    //emphw.Homeworks=JSON.parse(JSON.stringify(emphw.HwCollection));
+    console.log(emphw)
+  //  this.hwService.saveEmpHomework(emphw);
   }
 }
