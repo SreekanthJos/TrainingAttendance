@@ -25,12 +25,12 @@ export class Homework {
 export class EmpHomework {
     Id:string;
     Name: string;
-    Email: string;
-    Homeworks: object;
+    Email: string;  
     gitrepo:string;
-    Hworks=new Array<HomeworkObj>();
+    Hworks=new Array<any>();
 }
-export class HomeworkObj{
-name:string;
-status:boolean;
-}
+// export class HomeworkStatus{
+// name:string;
+// status:boolean;
+// gitrepo:string;
+// }

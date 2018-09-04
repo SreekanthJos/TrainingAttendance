@@ -1,87 +1,133 @@
+<div class="row">
 
-<!-- <form #registerForm="ngForm">  
-        
-          <h4 style="text-align:center">Create and Assign Homework</h4>
-          <div class="form-group">
-            <label for="" class="col-sm-3 control-label">Name:</label>
-  
-            <input type="text" id="name" name="name" placeholder="Name" required [(ngModel)]="emp.Name" class="form-control" #name="ngModel"
-            />
-          </div>
-          <div *ngIf="name.invalid && (name.dirty || name.touched)" class="alert alert-danger">  
-            <div *ngIf="name.errors.required">
-              Name is required.
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="" class="col-sm-3 control-label">Email:</label>
-            <input type="text" id="email" name="email" placeholder="Email" required [(ngModel)]="emp.Email" class="form-control" #email="ngModel"
-            />
-          </div>
-          <div *ngIf="email.invalid && (email.dirty || email.touched)" class="alert alert-danger">
-  
-            <div *ngIf="email.errors.required">
-              email is required.
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="" class="col-sm-3 control-label"> Course:</label>
-  
-            <select class="form-control" id="course" name="course" [(ngModel)]="emp.Course" required #course="ngModel">
+
+  <div class="col-sm-4">
+
+
+    <form #homeworkForm="ngForm">
+      <h4 style="text-align:center">Course Homework</h4>
+      <div class="form-group">
+        <label for="" class="col-sm-3 control-label">Name</label>
+
+        <input type="text" id="name" name="name" placeholder="Name" required [(ngModel)]="homework.Name" class="form-control" #name="ngModel"
+        />
+      </div>
+      <div *ngIf="name.invalid && (name.dirty || name.touched)" class="alert alert-danger">
+        <div *ngIf="name.errors.required">
+          Name is required.
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="" class="col-sm-3 control-label">Description</label>
+        <input type="text" id="description" name="description" placeholder="Description" required [(ngModel)]="homework.Description"
+          class="form-control" #description="ngModel" />
+      </div>
+      <div *ngIf="description.invalid && (description.dirty || description.touched)" class="alert alert-danger">
+
+        <div *ngIf="description.errors.required">
+          Description is required.
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="" class="col-sm-3 control-label"> Course</label>
+
+        <select class="form-control" id="course" name="course" [(ngModel)]="homework.Course" required #course="ngModel">
               <option value="" selected hidden>Select Course</option>
-            <option *ngFor="let course of courses">{{course}}</option>
-  
+            <option *ngFor="let course of courses">{{course}}</option> 
   
           </select>
-            <div *ngIf="course.invalid && (course.dirty || course.touched)" class="alert alert-danger">
-              <div *ngIf="course.errors.required">
-                course is required.
-              </div>
-            </div>
+        <div *ngIf="course.invalid && (course.dirty || course.touched)" class="alert alert-danger">
+          <div *ngIf="course.errors.required">
+            course is required.
           </div>
-          <div class="form-group" style="text-align:center">
-            <input type="button" [disabled]="!registerForm.valid" class="btn btn-primary" (click)="CourseRegistration()" value="Register"
-            />
+        </div>
+      </div>
+      <div class="form-group" style="text-align:center">
+        <input type="button" [disabled]="!homeworkForm.valid" class="btn btn-primary" (click)="assignHomework()" value="AssignHomework"
+        />
+      </div>
+    </form>
+
+  </div>
+  <div class="col-sm-8">
+    <mat-accordion>
+      <mat-expansion-panel *ngFor="let hw of empHomeworks">
+        <mat-expansion-panel-header>
+            <!-- <mat-checkbox>Assign</mat-checkbox> -->
+          <mat-panel-title>
+            {{hw.Name}}
+          </mat-panel-title>
+          <mat-panel-description>
+          <span style="text-align:left"> {{hw.Email}}</span> 
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <div *ngFor="let hh of hw.Hworks" class="bk">
+          <mat-form-field>
+            <input matInput id="hw" name="hw" placeholder="Homework" disabled value="{{hh.Name}}">
+          </mat-form-field>
+          <mat-form-field>
+            <textarea matInput id="desc" name="desc" placeholder="Description" disabled value="{{hh.Description}}"></textarea>
+          </mat-form-field>  
+          <mat-form-field>
+              <input matInput id="repo" name="repo" placeholder="Source Repo" [(ngModel)]="hh.Repo" value="{{hh.Repo}}">
+            </mat-form-field>        
+              <mat-checkbox></mat-checkbox>
+          
+        </div>
+        <br>
+        <div class="row">
+          <div class="col-md-4"></div>
+          <div class="col-md-4">
+             
           </div>
-       
-      </form> -->
+          <div class="col-md-4"> <button id="singlebutton" name="singlebutton" class="btn btn-primary" (click)="saveEmpHomework(hw)">Save</button> </div>
+        </div>
+      
+        <!-- <mat-form-field>
+          <input matInput placeholder="Age">
+        </mat-form-field> -->
+      </mat-expansion-panel>
+    </mat-accordion>
+    <!-- <table class="table table-striped table-bordered">
+      <thead style="color: #fff; background-color: #212529; border-color: #32383e;">
 
-
-      <table class="table table-striped table-bordered">
-        <thead style="color: #fff; background-color: #212529; border-color: #32383e;">
-        
         <th>#</th>
-          <th>Name</th>
-          <th>Email</th>
-          <th>howework</th>
-          <th>gitrepo</th>
-        </thead>
-        <tbody>
-          <tr *ngFor="let hw of homeworks;let i=index" >
-              <td>{{i+1}}</td>
-            <td>{{hw.Name}}</td>
-            <td>{{hw.Email}}</td>
+        <th>Name</th>
+        <th>Email</th>
+        <th>howework</th>
+        <th>gitrepo</th>
+        <th></th>
+      </thead>
+      <tbody>
+        <tr *ngFor="let hw of empHomeworks;let i=index">
+          <td>{{i+1}}</td>
+          <td>{{hw.Name}}</td>
+          <td>{{hw.Email}}</td>
+          <td>
+            <table>
+              <tr *ngFor="let hh of hw.HomeworkStatus">
+                <td>{{hh.name}}
+                  <input type="checkbox" [(ngModel)]="hh.status" [checked]="hh.status">
+                </td>
+              </tr>
+            </table>
+          </td>
+          <td>{{hw.gitrepo}}</td>
+         
+          <td>
 
-           <td>
-             <table>
-               <tr *ngFor="let hh of hw.Hworks">
-              <td>{{hh}}
-                <input type="checkbox" [(ngModel)]="hh.value" [checked]="hh.value">
-              </td>
-               </tr>
-             </table>
-           </td>
-            <td>{{hw.gitrepo}}</td>
-            <td></td>
-            <td>
-                
-                <a (click)="cancel()"  *ngIf="IsEdit==true" >
+            <a (click)="cancel()" *ngIf="IsEdit==true">
                   <span class="glyphicon glyphicon-remove"></span>
                 </a>
-                <a (click)="updateHomework(hw)">
+            <a (click)="updateHomework(hw)">
                   <span class="glyphicon glyphicon-edit"></span>
                 </a>
-              </td>
-          </tr>
-        </tbody>
-      </table>
+          </td>
+        </tr>
+      </tbody>
+    </table> -->
+
+  </div>
+
+
+</div>

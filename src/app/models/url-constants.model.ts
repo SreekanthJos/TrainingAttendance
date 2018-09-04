@@ -5,4 +5,6 @@ export class UrlConstants
     static Employees:string="/employees";
     static Courses:string="/Courses";
     static CourseDetails:string="/coursedetails";
+    static EmpHomeworks:string="/emphomeworks";
+    static Homeworks:string="/homeworks";
 }

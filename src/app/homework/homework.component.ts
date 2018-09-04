@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HomeworkService } from '../services/homework.service';
-import { EmpHomework } from '../models/attendance.model';
+import { EmpHomework, Homework, Employee } from '../models/attendance.model';
+import { AttendanceService } from '../services/attendance.service';
 
 @Component({
   selector: 'app-homework',
@@ -8,35 +9,79 @@ import { EmpHomework } from '../models/attendance.model';
   styleUrls: ['./homework.component.css']
 })
 export class HomeworkComponent implements OnInit {
-  homeworks: EmpHomework[];
-  //arhowrks:any[]=new Array();
-  constructor(private hwService: HomeworkService) { }
+  empHomeworks: EmpHomework[];
+  homework: Homework;
+  employees: Employee[];
+  panels = [
+    {
+      title: 'panel 1',
+      content: 'content 1'
+    },
+    {
+      title: 'panel 2',
+      content: 'content 2'
+    },
+  ]
+  courses: string[] = new Array<string>();
+  constructor(private hwService: HomeworkService, private atnService: AttendanceService) {
+    this.homework = new Homework();
+  }
 
   ngOnInit() {
     this.getHoweworks();
+    this.getCourses();
+    this.getEmployees();
+
+  }
+  getEmployees() {
+    this.atnService.GetAttendeesListForTraining().subscribe(res => {
+      this.employees = res;
+    });
   }
   getHoweworks() {
     this.hwService.getEmployeeHomeworks().subscribe(res => {
-      
-      this.homeworks = res;
-      for (var index = 0; index < this.homeworks.length; index++) {
-        //this.homeworks[index].HwCollection=new Array();
-        //var hw = JSON.stringify(this.homeworks[index].Homeworks);
-        //JSON.parse(hw,(key,value)=>{
-        // if(key!="") this.homeworks[index].HwCollection.push({"key":key,"value":value});
-        //})
-        
-      }
-     // console.log(this.arhowrks);
-     console.log(this.homeworks[0].Hworks[0].name);
+      this.empHomeworks = res;
     });
-  
-  }
 
+  }
+  getCourses() {
+    this.atnService.GetCourses().subscribe(data => {
+      if (data.length > 0)
+        this.courses = data[0].CourseName;
+      console.log(this.courses);
+    });
+  }
   updateHomework(emphw: EmpHomework) {
 
     //emphw.Homeworks=JSON.parse(JSON.stringify(emphw.HwCollection));
     console.log(emphw)
-  //  this.hwService.saveEmpHomework(emphw);
+    //  this.hwService.saveEmpHomework(emphw);
   }
+  assignHomework() {
+
+    this.hwService.createHomework(this.homework).subscribe(res => {
+      if (res) {
+        let ar = this.empHomeworks;
+        if (ar.length == 1) {
+          this.employees.forEach(emp => {
+            this.hwService.assignHomeworkToAttendees(emp, this.homework);
+          })
+        }
+        else {
+          this.employees.forEach(emp => {
+            this.empHomeworks.forEach(emphw => {
+              if (emphw.Email.trim() != emp.Email.trim())
+                this.hwService.updateHomwork(emp, this.homework, emphw);
+            });
+          })
+        }
+      }
+    });
+    this.getHoweworks();
+    console.log(this.homework);
+  }
+  saveEmpHomework(emphw: EmpHomework) {    
+   // console.log(emphw);
+        this.hwService.saveEmpHomework(emphw);
+      }
 }
