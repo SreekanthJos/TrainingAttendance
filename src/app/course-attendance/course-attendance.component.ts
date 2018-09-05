@@ -53,7 +53,7 @@ export class CourseAttendanceComponent implements OnInit {
 
     if (email != "")
       this.attendees = this.attendees.filter((atn) => {
-        if (atn.Email.toLocaleLowerCase().includes(email))
+        if (atn.Email.toLocaleLowerCase().includes(email.toLowerCase()))
           return atn;
       });
     // this.service.FilterByEmail(email).subscribe(data => {

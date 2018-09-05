@@ -10,13 +10,13 @@
       </div>
       <div class="col-sm-2">
         <mat-form-field class="pull-right">
-          <input matInput placeholder="filter by email" [(ngModel)]="searchText">
+          <input matInput placeholder="filter by email" [(ngModel)]="email" (input)="FilterByEmail($event.target.value)">
 
         </mat-form-field>
       </div>
       <div class="col-sm-3">
         <mat-form-field class="pull-right">
-          <input matInput #ref [matDatepicker]="picker" [(ngModel)]="searchText" placeholder="filter by date" >
+          <input matInput #ref [matDatepicker]="picker" [(ngModel)]="filterDate" placeholder="filter by date" (dateInput)="FilterByDate(ref.value)" >
           <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
@@ -47,7 +47,7 @@
                 <mat-datepicker #picker></mat-datepicker>
               </mat-form-field>
             </td>
-            <td>
+            <!-- <td>
               
               <a (click)="cancel()"  *ngIf="IsEdit==true" >
                 <span class="glyphicon glyphicon-remove"></span>
@@ -55,7 +55,7 @@
               <a (click)="edit(atn,i)" *ngIf="IsEdit==false">
                 <span class="glyphicon glyphicon-edit"></span>
               </a>
-            </td>
+            </td> -->
           </tr>
         </tbody>
       </table>

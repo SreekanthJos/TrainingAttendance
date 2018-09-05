@@ -12,7 +12,7 @@ export class HomeworkComponent implements OnInit {
   empHomeworks: EmpHomework[];
   homework: Homework;
   employees: Employee[];
-  
+  step=0;
   panels = [
     {
       title: 'panel 1',
@@ -90,5 +90,7 @@ export class HomeworkComponent implements OnInit {
    // console.log(emphw);
         this.hwService.saveEmpHomework(emphw);
       }
-   
+      setStep(index: number) {
+        this.step = index;
+      }
 }
