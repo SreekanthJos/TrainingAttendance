@@ -20,6 +20,10 @@ import { CourseAttendanceComponent } from './course-attendance/course-attendance
 import { FilterPipe } from './pipes/filter.pipe';
 import { HomeworkComponent } from './homework/homework.component';
 import { HomeworkService } from './services/homework.service';
+import { LoginComponent } from './login/login.component';
+
+import {OAuthModule,OAuthService} from 'angular-oauth2-oidc'
+import {HttpClientModule,HttpClient} from '@angular/common/http'
 @NgModule({
   declarations: [
     AppComponent,
@@ -29,7 +33,8 @@ import { HomeworkService } from './services/homework.service';
     TakeAttendanceComponent,
     CourseAttendanceComponent,
     FilterPipe,
-    HomeworkComponent
+    HomeworkComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -50,9 +55,11 @@ import { HomeworkService } from './services/homework.service';
     MatCheckboxModule,
     MatExpansionModule,
     MatSelectModule,
-    MatRadioModule
+    MatRadioModule,
+    OAuthModule.forRoot(),
+    HttpClientModule
   ],
-  providers: [AngularFirestore,AttendanceService,HomeworkService],
+  providers: [AngularFirestore,AttendanceService,HomeworkService,OAuthService,HttpClient],
   bootstrap: [AppComponent],
   entryComponents: [DialogComponent,CourseAttendanceComponent]
 })
