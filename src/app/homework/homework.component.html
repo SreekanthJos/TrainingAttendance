@@ -5,44 +5,47 @@
 
 
     <form #homeworkForm="ngForm">
-      <h4 style="text-align:center">Course Homework</h4>
-      <div class="form-group">
-        <label for="" class="col-sm-3 control-label">Name</label>
-
-        <input type="text" id="name" name="name" placeholder="Name" required [(ngModel)]="homework.Name" class="form-control" #name="ngModel"
+      <h4 style="text-align:left">Course Homework</h4>
+     
+       
+        <mat-form-field>
+        <input matInput  id="name" width="200px" name="name" placeholder="Name" required [(ngModel)]="homework.Name"  #name="ngModel"
         />
-      </div>
-      <div *ngIf="name.invalid && (name.dirty || name.touched)" class="alert alert-danger">
-        <div *ngIf="name.errors.required">
+      </mat-form-field>
+     
+      <!-- <div *ngIf="name.invalid && (name.dirty || name.touched)" class="alert alert-danger">
+        <!-- <div *ngIf="name.errors.required">
           Name is required.
         </div>
-      </div>
-      <div class="form-group">
-        <label for="" class="col-sm-3 control-label">Description</label>
-        <input type="text" id="description" name="description" placeholder="Description" required [(ngModel)]="homework.Description"
-          class="form-control" #description="ngModel" />
-      </div>
-      <div *ngIf="description.invalid && (description.dirty || description.touched)" class="alert alert-danger">
+      </div> -->
+      
+          <mat-form-field>
+        <textarea  matInput id="description" name="description" placeholder="Description" required [(ngModel)]="homework.Description"
+          #description="ngModel" ></textarea>
+        </mat-form-field>
+      
+      <!-- <div *ngIf="description.invalid && (description.dirty || description.touched)" class="alert alert-danger">
 
         <div *ngIf="description.errors.required">
           Description is required.
         </div>
-      </div>
-      <div class="form-group">
-        <label for="" class="col-sm-3 control-label"> Course</label>
-
-        <select class="form-control" id="course" name="course" [(ngModel)]="homework.Course" required #course="ngModel">
-              <option value="" selected hidden>Select Course</option>
-            <option *ngFor="let course of courses">{{course}}</option> 
+      </div> -->
+      
+       
+        <mat-form-field>
+            <mat-select placeholder="Select Course" id="course" name="course" [(ngModel)]="homework.Course" required #course="ngModel">       
+             
+            <mat-option *ngFor="let course of courses"  [value]="course">{{course}}</mat-option> 
   
-          </select>
-        <div *ngIf="course.invalid && (course.dirty || course.touched)" class="alert alert-danger">
+          </mat-select>
+          </mat-form-field>
+        <!-- <div *ngIf="course.invalid && (course.dirty || course.touched)" class="alert alert-danger">
           <div *ngIf="course.errors.required">
             course is required.
           </div>
-        </div>
-      </div>
-      <div class="form-group" style="text-align:center">
+        </div> -->
+     
+      <div class="form-group">
         <input type="button" [disabled]="!homeworkForm.valid" class="btn btn-primary" (click)="assignHomework()" value="AssignHomework"
         />
       </div>

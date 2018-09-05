@@ -40,7 +40,10 @@ export class HomeworkComponent implements OnInit {
   }
   getHoweworks() {
     this.hwService.getEmployeeHomeworks().subscribe(res => {
+
       this.empHomeworks = res;
+      
+      this.empHomeworks= this.empHomeworks.filter(emp=>{if(emp.Name!=""){return emp;}})
     });
 
   }
@@ -62,7 +65,7 @@ export class HomeworkComponent implements OnInit {
     this.hwService.createHomework(this.homework).subscribe(res => {
       if (res) {
         let ar = this.empHomeworks;
-        if (ar.length == 1) {
+        if (ar.length == 0) {
           this.employees.forEach(emp => {
             this.hwService.assignHomeworkToAttendees(emp, this.homework);
           })
@@ -80,6 +83,7 @@ export class HomeworkComponent implements OnInit {
     this.getHoweworks();
     console.log(this.homework);
   }
+
   saveEmpHomework(emphw: EmpHomework) {    
    // console.log(emphw);
         this.hwService.saveEmpHomework(emphw);
