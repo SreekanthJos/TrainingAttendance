@@ -12,6 +12,7 @@ export class HomeworkComponent implements OnInit {
   empHomeworks: EmpHomework[];
   homework: Homework;
   employees: Employee[];
+  
   panels = [
     {
       title: 'panel 1',
@@ -22,6 +23,7 @@ export class HomeworkComponent implements OnInit {
       content: 'content 2'
     },
   ]
+  panelOpenState = false;
   courses: string[] = new Array<string>();
   constructor(private hwService: HomeworkService, private atnService: AttendanceService) {
     this.homework = new Homework();
@@ -88,4 +90,5 @@ export class HomeworkComponent implements OnInit {
    // console.log(emphw);
         this.hwService.saveEmpHomework(emphw);
       }
+   
 }

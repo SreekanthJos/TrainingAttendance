@@ -48,9 +48,7 @@ export class HomeworkService {
     this.firebaseDB.collection(UrlConstants.EmpHomeworks).add(data);
   }
   updateHomwork(emp: Employee, homework: Homework, emphw: EmpHomework) {
-    // let ar: any[] = new Array();
-    // ar.push({ 'name': homework.Name, 'description':homework.Description, 'status': false });
-
+    
     emphw.Hworks.push({ 'Name': homework.Name, 'Description':homework.Description,'Repo':'','Status': false });
     this.firebaseDB.doc(`emphomeworks/${emphw.Id}`).update(emphw);
 

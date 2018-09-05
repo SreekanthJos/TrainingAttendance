@@ -21,12 +21,12 @@ export class CourseAttendanceComponent implements OnInit {
   IsEdit: boolean = false;
   editIndex: number;
   dataSource;
-  displayedColumns =['Course', 'Email', 'IsPresent', 'Name','SessionDate','Options'];
- // columns =['IsPresent', 'Name', 'Email', 'Course','SessionDate'];
+  displayedColumns = ['Course', 'Email', 'IsPresent', 'Name', 'SessionDate', 'Options'];
+  // columns =['IsPresent', 'Name', 'Email', 'Course','SessionDate'];
   constructor(private af: AngularFirestore, public service: AttendanceService) {
     //this.displayedColumns = ['IsPresent', 'Name', 'Email', 'Course','SessionDate'];
     this.firebaseDB = af;
-   //this.columns=this.displayedColumns;
+    //this.columns=this.displayedColumns;
   }
 
   ngOnInit() {
@@ -37,9 +37,13 @@ export class CourseAttendanceComponent implements OnInit {
   FilterByDate(fdate: string) {
 
     if (fdate != "")
-      this.service.FilterByDate(fdate).subscribe(data => {
-        this.attendees = data;
+      this.attendees = this.attendees.filter((atn) => {
+        if (atn.SessionDate == fdate)
+          return atn;
       });
+    // this.service.FilterByDate(fdate).subscribe(data => {
+    //   this.attendees = data;
+    // });
     else
       this.GetCourseAttendance();
   }
@@ -48,20 +52,22 @@ export class CourseAttendanceComponent implements OnInit {
   FilterByEmail(email: string) {
 
     if (email != "")
-      this.service.FilterByEmail(email).subscribe(data => {
-        this.attendees = data;
+      this.attendees = this.attendees.filter((atn) => {
+        if (atn.Email.toLocaleLowerCase().includes(email))
+          return atn;
       });
+    // this.service.FilterByEmail(email).subscribe(data => {
+    //   this.attendees = data;
+    // });
     else
       this.GetCourseAttendance();
   }
   GetCourseAttendance() {
-
     this.service.GetCourseAttendance().subscribe(data => {
       this.attendees = data.sort((a, b) => a.SessionDate > b.SessionDate ? 1 : -1)
-      this.dataSource=new MatTableDataSource(this.attendees);
+      this.dataSource = new MatTableDataSource(this.attendees);
       console.log(this.dataSource);
     });
-    
   }
 
   edit(atn: Attendees, i: number) {

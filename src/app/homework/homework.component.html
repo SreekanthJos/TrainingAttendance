@@ -54,7 +54,8 @@
   </div>
   <div class="col-sm-8">
     <mat-accordion>
-      <mat-expansion-panel *ngFor="let hw of empHomeworks">
+      <div *ngFor="let hw of empHomeworks;let i =index">
+      <mat-expansion-panel id ={{i}}  (closed)="panelOpenState = false" (opened)="panelOpenState = true">
         <mat-expansion-panel-header>
             <!-- <mat-checkbox>Assign</mat-checkbox> -->
           <mat-panel-title>
@@ -73,15 +74,19 @@
           </mat-form-field>  
           <mat-form-field>
               <input matInput id="repo" name="repo" placeholder="Source Repo" [(ngModel)]="hh.Repo" value="{{hh.Repo}}">
-            </mat-form-field>        
-              <mat-checkbox></mat-checkbox>
-          
+            </mat-form-field> 
+            <br>       
+           
         </div>
         <br>
         <div class="row">
-          <div class="col-md-4"></div>
-          <div class="col-md-4">
-             
+          <div class="col-md-2"></div>
+          <div class="col-md-6">
+              <mat-radio-group>
+                  <mat-radio-button value="1" style="color:red">!Started</mat-radio-button>
+                  <mat-radio-button value="2" >Review</mat-radio-button>
+                  <mat-radio-button value="3">Completed</mat-radio-button>
+                </mat-radio-group>
           </div>
           <div class="col-md-4"> <button id="singlebutton" name="singlebutton" class="btn btn-primary" (click)="saveEmpHomework(hw)">Save</button> </div>
         </div>
@@ -90,6 +95,7 @@
           <input matInput placeholder="Age">
         </mat-form-field> -->
       </mat-expansion-panel>
+    </div>
     </mat-accordion>
     <!-- <table class="table table-striped table-bordered">
       <thead style="color: #fff; background-color: #212529; border-color: #32383e;">
