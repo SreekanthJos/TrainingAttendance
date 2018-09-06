@@ -38,7 +38,7 @@ export class HomeworkService {
   }
   assignHomeworkToAttendees(emp: Employee, homework: Homework) {
     let ar: any[] = new Array();
-    ar.push({ 'Name': homework.Name, 'Description':homework.Description,'Repo':'','Status': false });
+    ar.push({ 'Name': homework.Name, 'Description':homework.Description,'Repo':'','HomeworkStatus': 'NotStarted' });
     let data = {
       "Email": emp.Email,
       "Name": emp.Name,
@@ -47,9 +47,9 @@ export class HomeworkService {
     }
     this.firebaseDB.collection(UrlConstants.EmpHomeworks).add(data);
   }
-  updateHomwork(emp: Employee, homework: Homework, emphw: EmpHomework) {
+  updateHomwork(homework: Homework, emphw: EmpHomework) {
     
-    emphw.Hworks.push({ 'Name': homework.Name, 'Description':homework.Description,'Repo':'','Status': false });
+    emphw.Hworks.push({ 'Name': homework.Name, 'Description':homework.Description,'Repo':'','HomeworkStatus':  'NotStarted' });
     this.firebaseDB.doc(`emphomeworks/${emphw.Id}`).update(emphw);
 
   }

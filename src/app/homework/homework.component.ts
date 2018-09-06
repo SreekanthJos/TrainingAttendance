@@ -12,17 +12,8 @@ export class HomeworkComponent implements OnInit {
   empHomeworks: EmpHomework[];
   homework: Homework;
   employees: Employee[];
-  step=0;
-  panels = [
-    {
-      title: 'panel 1',
-      content: 'content 1'
-    },
-    {
-      title: 'panel 2',
-      content: 'content 2'
-    },
-  ]
+  step = 0;
+
   panelOpenState = false;
   courses: string[] = new Array<string>();
   constructor(private hwService: HomeworkService, private atnService: AttendanceService) {
@@ -44,8 +35,8 @@ export class HomeworkComponent implements OnInit {
     this.hwService.getEmployeeHomeworks().subscribe(res => {
 
       this.empHomeworks = res;
-      
-      this.empHomeworks= this.empHomeworks.filter(emp=>{if(emp.Name!=""){return emp;}})
+
+      this.empHomeworks = this.empHomeworks.filter(emp => { if (emp.Name != "") { return emp; } })
     });
 
   }
@@ -63,7 +54,6 @@ export class HomeworkComponent implements OnInit {
     //  this.hwService.saveEmpHomework(emphw);
   }
   assignHomework() {
-
     this.hwService.createHomework(this.homework).subscribe(res => {
       if (res) {
         let ar = this.empHomeworks;
@@ -73,11 +63,11 @@ export class HomeworkComponent implements OnInit {
           })
         }
         else {
-          this.employees.forEach(emp => {
+         // this.employees.forEach(emp => {
             this.empHomeworks.forEach(emphw => {
-              if (emphw.Email.trim() != emp.Email.trim())
-                this.hwService.updateHomwork(emp, this.homework, emphw);
-            });
+           //   if (emphw.Email.trim() != emp.Email.trim())
+                this.hwService.updateHomwork(this.homework, emphw);
+           // });
           })
         }
       }
@@ -86,11 +76,10 @@ export class HomeworkComponent implements OnInit {
     console.log(this.homework);
   }
 
-  saveEmpHomework(emphw: EmpHomework) {    
-   // console.log(emphw);
-        this.hwService.saveEmpHomework(emphw);
-      }
-      setStep(index: number) {
-        this.step = index;
-      }
+  saveEmpHomework(emphw: EmpHomework) {
+    this.hwService.saveEmpHomework(emphw);
+  }
+  setStep(index: number) {
+    this.step = index;
+  }
 }

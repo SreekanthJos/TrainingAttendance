@@ -25,9 +25,9 @@ export class Homework {
 export class EmpHomework {
     Id:string;
     Name: string;
-    Email: string;  
-    gitrepo:string;
+    Email: string;     
     Hworks=new Array<any>();
+    HomeworkStatus:string;
 }
 // export class HomeworkStatus{
 // name:string;
