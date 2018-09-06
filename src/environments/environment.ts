@@ -12,5 +12,6 @@ export const environment = {
     projectId: "trainingattendance-2f535",
     storageBucket: "trainingattendance-2f535.appspot.com",
     messagingSenderId: "919206743593"
-  }
+  },
+  googleClientId:"113496351353-5v64ma7r76otpt4u316frnvomtd784ol.apps.googleusercontent.com"
 };
