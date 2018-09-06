@@ -10,9 +10,10 @@ import {environment  } from '../environments/environment';
 import {AngularFirestoreModule,AngularFirestore } from 'angularfire2/firestore';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AttendanceService } from './services/attendance.service'
-
-
-import {MatRadioModule, MatSelectModule, MatAccordion,MatExpansionModule, MatCheckboxModule, MatTableModule ,MatDatepickerModule,MatAutocompleteModule,MatButtonModule,MatSlideToggleModule,MatInputModule,MatNativeDateModule,MatFormFieldModule,MatTabsModule,MatDialogModule } from '@angular/material';
+import {MatRadioModule, MatSelectModule, MatAccordion,MatExpansionModule,
+   MatCheckboxModule, MatTableModule ,MatDatepickerModule,MatAutocompleteModule,
+   MatButtonModule,MatSlideToggleModule,MatInputModule,MatNativeDateModule,
+   MatFormFieldModule,MatTabsModule,MatDialogModule } from '@angular/material';
 import { DialogComponent } from './dialog/dialog.component';
 import { CourseRegistrationComponent } from './course-registration/course-registration.component';
 import { TakeAttendanceComponent } from './take-attendance/take-attendance.component';
@@ -21,9 +22,22 @@ import { FilterPipe } from './pipes/filter.pipe';
 import { HomeworkComponent } from './homework/homework.component';
 import { HomeworkService } from './services/homework.service';
 import { LoginComponent } from './login/login.component';
+import { Routes, RouterModule } from '@angular/router';
 
-import {OAuthModule,OAuthService} from 'angular-oauth2-oidc'
-import {HttpClientModule,HttpClient} from '@angular/common/http'
+//import {OAuthModule,OAuthService} from 'angular-oauth2-oidc'
+import {HttpClientModule,HttpClient} from '@angular/common/http';
+import { RegisterComponent } from './register/register.component'
+import { LoginService } from './services/login.service';
+
+
+const routes=[
+  {path:'login',component:LoginComponent,pathMatch: 'full'},
+  {path:'attendance',component:AttendanceComponent,pathMatch: 'full'},
+  // {path:'courseAttendance',component:CourseAttendanceComponent},
+  // {path:'homework',component:HomeworkComponent},
+  {path:'register',component:RegisterComponent},
+  {path:'**',redirectTo:'/login',pathMatch: 'full'}];
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -34,7 +48,9 @@ import {HttpClientModule,HttpClient} from '@angular/common/http'
     CourseAttendanceComponent,
     FilterPipe,
     HomeworkComponent,
-    LoginComponent
+    LoginComponent,
+    RegisterComponent
+    
   ],
   imports: [
     BrowserModule,
@@ -42,8 +58,7 @@ import {HttpClientModule,HttpClient} from '@angular/common/http'
     FormsModule,
     AngularFireModule.initializeApp(environment.firebase, 'trainingattendance-2f535'),
     AngularFireDatabaseModule,  
-    AngularFirestoreModule  ,   
-
+    AngularFirestoreModule,   
     MatButtonModule,
     MatInputModule,
     MatAutocompleteModule,
@@ -56,10 +71,12 @@ import {HttpClientModule,HttpClient} from '@angular/common/http'
     MatExpansionModule,
     MatSelectModule,
     MatRadioModule,
-    OAuthModule.forRoot(),
-    HttpClientModule
+  //  OAuthModule.forRoot(),
+    HttpClientModule,
+    RouterModule.forRoot(routes)
+
   ],
-  providers: [AngularFirestore,AttendanceService,HomeworkService,OAuthService,HttpClient],
+  providers: [AngularFirestore,AttendanceService,HomeworkService,HttpClient,LoginService],
   bootstrap: [AppComponent],
   entryComponents: [DialogComponent,CourseAttendanceComponent]
 })

@@ -34,3 +34,8 @@ export class EmpHomework {
 // status:boolean;
 // gitrepo:string;
 // }
+export class User
+{
+    Email:string;
+    Password:string;
+}

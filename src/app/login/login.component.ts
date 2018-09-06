@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import {AuthConfig} from 'angular-oauth2-oidc'
-import { environment } from '../../environments/environment';
-import { OAuthService, JwksValidationHandler } from 'angular-oauth2-oidc';
+import { Component, OnInit, NgZone } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
+import { LoginService } from '../services/login.service';
+import { User } from '../models/attendance.model';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -9,23 +9,31 @@ import { OAuthService, JwksValidationHandler } from 'angular-oauth2-oidc';
 })
 
 export class LoginComponent implements OnInit {
-  authConfig:AuthConfig={
-    issuer: 'https://accounts.google.com',
-    redirectUri: window.location.origin + '/index.html',
-    clientId: environment.googleClientId,
-    scope: 'openid profile email',
-    strictDiscoveryDocumentValidation: false
-  }
-  constructor(private oauthService:OAuthService) {
+  model: any = {};
+  loading = false;
+  returnUrl: string;
+  user: User = new User();
 
-    this.oauthService.configure(this.authConfig);
-   this.oauthService.tokenValidationHandler = new JwksValidationHandler();
-   this.oauthService.loadDiscoveryDocumentAndTryLogin();
-   }
-login(){
-  this.oauthService.initImplicitFlow();
-}
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private loginService: LoginService,
+    private ngZone: NgZone
+  ) {
+
+  }
+
   ngOnInit() {
+    //  this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
   }
 
+  login() {
+    let flag = false;
+    this.loginService.login(this.user).subscribe(res => {
+      if (res) {
+        this.ngZone.run(() => this.router.navigate(['/attendance']));
+      }
+    });
+
+  }
 }
