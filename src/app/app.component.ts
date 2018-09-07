@@ -8,7 +8,7 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   //isAuth=false;
-  constructor(private loginService:LoginService){
+  constructor(public loginService:LoginService){
 //this.isAuth=this.loginService.isAuthenticated;
   }
   title = 'app';
