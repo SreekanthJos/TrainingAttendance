@@ -13,7 +13,7 @@ export class LoginComponent implements OnInit {
   loading = false;
   returnUrl: string;
   user: User = new User();
-
+  errmsg:string;
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -31,7 +31,12 @@ export class LoginComponent implements OnInit {
     let flag = false;
     let res = this.loginService.login(this.user);
     if (res) {
+      this.errmsg="";
       this.router.navigate(['/courseAttendance']);
+    }
+    else
+    {
+      this.errmsg="username or password is wrong!!"
     }
   }
 }

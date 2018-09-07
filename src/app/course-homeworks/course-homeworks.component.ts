@@ -67,6 +67,6 @@ export class CourseHomeworksComponent implements OnInit {
     });
   
     this.getCourseHomeworks();
-    console.log(this.homework);
+    this.homework=new Homework();
   }
 }
