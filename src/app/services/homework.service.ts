@@ -22,6 +22,10 @@ export class HomeworkService {
     }))
     );
   }
+  getCourseHomeworks():Observable<Homework[]>
+  {
+    return this.firebaseDB.collection<Homework>("/homeworks").valueChanges();
+  }
   saveEmpHomework(emphw: EmpHomework) {    
 
     this.firebaseDB.doc(`emphomeworks/${emphw.Id}`).update(emphw);

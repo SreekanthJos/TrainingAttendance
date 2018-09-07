@@ -31,7 +31,7 @@ export class LoginComponent implements OnInit {
     let flag = false;
     this.loginService.login(this.user).subscribe(res => {
       if (res) {
-        this.ngZone.run(() => this.router.navigate(['/attendance']));
+       this.router.navigate(['/courseAttendance']);
       }
     });
 

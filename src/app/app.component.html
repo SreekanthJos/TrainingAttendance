@@ -1,1 +1,17 @@
-<router-outlet></router-outlet>
+
+<nav class="navbar navbar-inverse" *ngIf="loginService.isAuthenticated">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="#">WebSiteName</a>
+      </div>
+      <ul class="nav navbar-nav">
+          <li ><a [routerLink]="['/courseRegister']">Regster</a></li>
+        <li ><a [routerLink]="['/takeAttendance']">Take Attendance</a></li>
+        <li class="active"><a [routerLink]="['/courseAttendance']">Course Attendance</a></li>
+        <li><a [routerLink]="['/homework']">Homeworks</a></li>
+        
+      </ul>
+    </div>
+    
+  </nav>
+  <router-outlet></router-outlet>

@@ -4,10 +4,11 @@ import { AngularFirestore } from 'angularfire2/firestore';
 import { User } from '../models/attendance.model';
 import { Observable } from 'rxjs/Observable'
 @Injectable()
+
 export class LoginService {
   firebaseDB: AngularFirestore;
   users: User[] = new Array();
-
+isAuthenticated: boolean = false;
   constructor(private af: AngularFirestore) {
     this.firebaseDB = af;
     this.getusers();
@@ -21,8 +22,9 @@ export class LoginService {
     let flag = false;
     if (this.users.length != 0) {
       this.users.forEach(d => {
-        if (user.Email == d.Email && user.Password == d.Password) {
+        if (user.Email.toLowerCase() == d.Email.toLowerCase() && user.Password == d.Password) {
           flag = true;
+          this.isAuthenticated = true;
         }
       });
     }
@@ -30,7 +32,15 @@ export class LoginService {
   }
   register(user: User): Observable<boolean> {
     let res = this.login(user);
-    this.firebaseDB.collection('/Users').add(user);
-    return Observable.of(true);
+    let result=false;
+    res.subscribe(flag => {
+      if (!flag) {
+        let data = { "Email": user.Email, "Password": user.Password }
+        this.firebaseDB.collection('/Users').add(data);
+        result=true;
+        this.isAuthenticated = true;
+      }
+    })
+    return Observable.of(result);
   }
 }

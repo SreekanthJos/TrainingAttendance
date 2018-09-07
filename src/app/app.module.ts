@@ -33,10 +33,12 @@ import { LoginService } from './services/login.service';
 const routes=[
   {path:'login',component:LoginComponent,pathMatch: 'full'},
   {path:'attendance',component:AttendanceComponent,pathMatch: 'full'},
-  // {path:'courseAttendance',component:CourseAttendanceComponent},
-  // {path:'homework',component:HomeworkComponent},
+  {path:'takeAttendance',component:TakeAttendanceComponent},
+  {path:'courseRegister',component:CourseRegistrationComponent},
+  {path:'courseAttendance',component:CourseAttendanceComponent},
+  {path:'homework',component:HomeworkComponent},
   {path:'register',component:RegisterComponent},
-  {path:'**',redirectTo:'/login',pathMatch: 'full'}];
+  {path:'**',redirectTo:'/login'}];
 
 @NgModule({
   declarations: [
@@ -49,8 +51,7 @@ const routes=[
     FilterPipe,
     HomeworkComponent,
     LoginComponent,
-    RegisterComponent
-    
+    RegisterComponent    
   ],
   imports: [
     BrowserModule,

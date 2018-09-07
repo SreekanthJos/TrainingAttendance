@@ -16,7 +16,7 @@ export class Attendees {
 }
 
 export class Homework {
-    Id: string;
+    
     Name: string;
     Description: string;
     Course: string;

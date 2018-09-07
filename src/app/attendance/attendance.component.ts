@@ -7,6 +7,7 @@ import { MatDatepickerInputEvent } from '@angular/material'
 import { DialogComponent } from '../dialog/dialog.component';
 import { MatDialog } from '@angular/material';
 import { AttendanceService } from '../services/attendance.service'
+import { LoginService } from '../services/login.service';
 @Component({
   selector: 'app-attendance',
   templateUrl: './attendance.component.html',
@@ -22,10 +23,10 @@ export class AttendanceComponent  {
   // courses: string[] = new Array<string>();
   // filterDate: string;
 
-  // constructor(private af: AngularFirestore, public dialog: MatDialog, public service: AttendanceService) {
-
-  //   this.firebaseDB = af;
-  // }
+//   constructor(private af: AngularFirestore, public dialog: MatDialog, public service: LoginService) {
+// this.flag=this.service.isAuthenticated;
+//      //this.firebaseDB = af;
+//  }
 
   // ngOnInit() {
   //   this.GetCourses();
