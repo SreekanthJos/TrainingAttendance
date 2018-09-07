@@ -1,0 +1,51 @@
+<div class="row" *ngIf="isAdmin">
+  <form #homeworkForm="ngForm">
+    <h4 style="text-align:left">Course Homework</h4>
+    <mat-form-field>
+      <input matInput id="name" width="200px" name="name" placeholder="Name" required [(ngModel)]="homework.Name" #name="ngModel"
+      />
+    </mat-form-field>
+    <mat-form-field>
+      <textarea matInput id="description" name="description" placeholder="Description" required [(ngModel)]="homework.Description"
+        #description="ngModel"></textarea>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-select placeholder="Select Course" id="course" name="course" [(ngModel)]="homework.Course" required #course="ngModel">
+
+        <mat-option *ngFor="let course of courses" [value]="course">{{course}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+
+    <div class="form-group">
+      <input type="button" [disabled]="!homeworkForm.valid" class="btn btn-primary" (click)="assignHomework()" value="AssignHomework"
+      />
+    </div>
+  </form>
+</div>
+<div class="row" style="text-align:center">
+  <h1>Course Homeworks</h1>
+</div>
+<div class="row" *ngIf="courseHomeworks.length>0">
+  <mat-table #table [dataSource]="dataSource">
+    <ng-container matColumnDef="SNO">
+      <mat-header-cell *matHeaderCellDef>S.No</mat-header-cell>
+      <mat-cell *matCellDef="let row;let i=index"><span>{{i+1}}</span></mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="Name">
+      <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
+      <mat-cell *matCellDef="let row"><span>{{row.Name}}</span></mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="Description">
+      <mat-header-cell *matHeaderCellDef>Description</mat-header-cell>
+      <mat-cell *matCellDef="let row"><span>{{row.Description}}</span></mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="Course">
+      <mat-header-cell *matHeaderCellDef>Course</mat-header-cell>
+      <mat-cell *matCellDef="let row"><span>{{row.Course}}</span></mat-cell>
+    </ng-container>
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+
+  </mat-table>
+</div>

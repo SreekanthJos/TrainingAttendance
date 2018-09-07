@@ -25,9 +25,8 @@ export class HomeworkComponent implements OnInit {
 
   ngOnInit() {
     this.getHoweworks();
-    this.getCourses();
     this.getEmployees();
-    this.getCourseHoweworks();
+
   }
   getEmployees() {
     this.atnService.GetAttendeesListForTraining().subscribe(res => {
@@ -40,53 +39,7 @@ export class HomeworkComponent implements OnInit {
       this.empHomeworks = res;
       this.empHomeworks = this.empHomeworks.filter(emp => { if (emp.Name != "") { return emp; } })
     });
-
   }
-  getCourseHoweworks() {
-    this.hwService.getCourseHomeworks().subscribe(res => {
-
-      this.courseHomeworks = res.filter((ch) => { if (ch.Name != "") return ch; });
-      this.dataSource = new MatTableDataSource(this.courseHomeworks);
-    });
-
-  }
-  getCourses() {
-    this.atnService.GetCourses().subscribe(data => {
-      if (data.length > 0)
-        this.courses = data[0].CourseName;
-      console.log(this.courses);
-    });
-  }
-  updateHomework(emphw: EmpHomework) {
-
-    //emphw.Homeworks=JSON.parse(JSON.stringify(emphw.HwCollection));
-    console.log(emphw)
-    //  this.hwService.saveEmpHomework(emphw);
-  }
-  assignHomework() {
-    this.hwService.createHomework(this.homework).subscribe(res => {
-      if (res) {
-        let ar = this.empHomeworks;
-        if (ar.length == 0) {
-          this.employees.forEach(emp => {
-            this.hwService.assignHomeworkToAttendees(emp, this.homework);
-          })
-        }
-        else {
-          // this.employees.forEach(emp => {
-          this.empHomeworks.forEach(emphw => {
-            //   if (emphw.Email.trim() != emp.Email.trim())
-            this.hwService.updateHomwork(this.homework, emphw);
-            // });
-          })
-        }
-      }
-    });
-    this.getHoweworks();
-    this.getCourseHoweworks();
-    console.log(this.homework);
-  }
-
   saveEmpHomework(emphw: EmpHomework) {
     this.hwService.saveEmpHomework(emphw);
   }

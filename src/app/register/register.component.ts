@@ -10,6 +10,8 @@ import { User } from '../models/attendance.model';
 })
 export class RegisterComponent implements OnInit {
   user:User=new User()
+  errmsg:string;
+  isExist=false;
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -24,6 +26,11 @@ export class RegisterComponent implements OnInit {
     this.loginService.register(this.user).subscribe(res => {
       if (res) {
         this.router.navigate(['/attendance']);
+      }
+      else
+      {
+        this.isExist=true;
+        this.errmsg="user already exists"
       }
     });
   }

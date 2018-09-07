@@ -28,6 +28,7 @@ import { Routes, RouterModule } from '@angular/router';
 import {HttpClientModule,HttpClient} from '@angular/common/http';
 import { RegisterComponent } from './register/register.component'
 import { LoginService } from './services/login.service';
+import { CourseHomeworksComponent } from './course-homeworks/course-homeworks.component';
 
 
 const routes=[
@@ -36,8 +37,10 @@ const routes=[
   {path:'takeAttendance',component:TakeAttendanceComponent},
   {path:'courseRegister',component:CourseRegistrationComponent},
   {path:'courseAttendance',component:CourseAttendanceComponent},
-  {path:'homework',component:HomeworkComponent},
+  {path:'coursehomework',component:CourseHomeworksComponent},
+  {path:'attendeesHomework',component:HomeworkComponent},
   {path:'register',component:RegisterComponent},
+  
   {path:'**',redirectTo:'/login'}];
 
 @NgModule({
@@ -51,7 +54,8 @@ const routes=[
     FilterPipe,
     HomeworkComponent,
     LoginComponent,
-    RegisterComponent    
+    RegisterComponent,
+    CourseHomeworksComponent    
   ],
   imports: [
     BrowserModule,

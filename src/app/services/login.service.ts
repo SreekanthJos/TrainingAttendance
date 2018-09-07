@@ -8,7 +8,9 @@ import { Observable } from 'rxjs/Observable'
 export class LoginService {
   firebaseDB: AngularFirestore;
   users: User[] = new Array();
-isAuthenticated: boolean = false;
+  isAuthenticated: boolean = false;
+  isAdmin = false;
+  isUserExist = false
   constructor(private af: AngularFirestore) {
     this.firebaseDB = af;
     this.getusers();
@@ -17,30 +19,44 @@ isAuthenticated: boolean = false;
   getusers() {
     this.firebaseDB.collection('/Users').valueChanges().subscribe(res => { this.users = res as User[] });
   }
-  login(user: User): Observable<boolean> {
-    debugger;
-    let flag = false;
+  login(user: User): boolean {
+
+
     if (this.users.length != 0) {
       this.users.forEach(d => {
         if (user.Email.toLowerCase() == d.Email.toLowerCase() && user.Password == d.Password) {
-          flag = true;
+
           this.isAuthenticated = true;
+          if (user.Email.toLowerCase() == "siva" && user.Email.toLowerCase() == "naveen") {
+            this.isAdmin = true;
+          }
         }
       });
     }
-    return Observable.of(flag);
+    return (this.isAuthenticated);
+  }
+  checkUserExist(user: User): boolean {
+    if (this.users.length != 0) {
+      this.users.forEach(d => {
+        if (user.Email.toLowerCase() == d.Email.toLowerCase()) {
+          this.isUserExist = true;
+        }
+      })
+    }
+    return this.isUserExist;
   }
   register(user: User): Observable<boolean> {
-    let res = this.login(user);
-    let result=false;
-    res.subscribe(flag => {
-      if (!flag) {
-        let data = { "Email": user.Email, "Password": user.Password }
-        this.firebaseDB.collection('/Users').add(data);
-        result=true;
-        this.isAuthenticated = true;
-      }
-    })
+    let res = this.checkUserExist(user);
+    let result = false;
+
+    if (!res) {
+      let data = { "Email": user.Email, "Password": user.Password }
+      this.firebaseDB.collection('/Users').add(data);
+      result = true;
+      this.isAuthenticated = true;
+    }
+
+
     return Observable.of(result);
   }
 }
