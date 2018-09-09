@@ -56,24 +56,27 @@ export class CourseHomeworksComponent implements OnInit {
   }
 
   assignHomework(homework: Homework) {
+    console.log(homework);
     debugger;
-    //if (this.empHomeworks.length == 0) {
+    if (this.empHomeworks.length == 0) {
     this.hwService.getEmployeeHomeworks().subscribe(res => {
       this.empHomeworks = res as EmpHomework[];
-      this.empHomeworks = this.empHomeworks.filter(emp => { if (emp.Name != "") { return emp; } })
-      if (this.empHomeworks.length === 0) {
+     // this.empHomeworks = this.empHomeworks.filter(emp => { if (emp.Name != "") { return emp; } })
+      if (this.empHomeworks.length === 1) {
         this.employees.forEach(emp => {
           this.hwService.assignHomeworkToAttendees(emp, homework);
         });
       }
       else {
       //  this.empHomeworks = res as EmpHomework[];
+      this.empHomeworks = this.empHomeworks.filter(emp => { if (emp.Name != "") { return emp; } });
         this.empHomeworks.forEach(emphw => {
           this.hwService.updateHomework(homework, emphw);
         })
       }
     });
   }
+}
 
   createHomework() {
     this.hwService.createHomework(this.homework).subscribe(res => {
