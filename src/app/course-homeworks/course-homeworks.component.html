@@ -1,6 +1,7 @@
-<div class="row" *ngIf="isAdmin">
-  <form #homeworkForm="ngForm">
-    <h4 style="text-align:left">Course Homework</h4>
+<div class="row"  style="text-align:center"><h1>Course Homeworks</h1></div>
+<div class="row" *ngIf="isAdmin" style="text-align:center">
+  <form #homeworkForm="ngForm" >
+      
     <mat-form-field>
       <input matInput id="name" width="200px" name="name" placeholder="Name" required [(ngModel)]="homework.Name" #name="ngModel"
       />
@@ -18,15 +19,16 @@
 
 
     <div class="form-group">
-      <input type="button" [disabled]="!homeworkForm.valid" class="btn btn-primary" (click)="assignHomework()" value="AssignHomework"
+      <input type="button" [disabled]="!homeworkForm.valid" class="btn btn-primary" 
+      (click)="createHomework();homeworkForm.reset()" value="Save"
       />
     </div>
   </form>
 </div>
 <div class="row" style="text-align:center">
-  <h1>Course Homeworks</h1>
+  
 </div>
-<div class="row" *ngIf="courseHomeworks.length>0">
+<div class="row" *ngIf="courseHomeworks">
   <mat-table #table [dataSource]="dataSource">
     <ng-container matColumnDef="SNO">
       <mat-header-cell *matHeaderCellDef>S.No</mat-header-cell>
@@ -44,6 +46,18 @@
       <mat-header-cell *matHeaderCellDef>Course</mat-header-cell>
       <mat-cell *matCellDef="let row"><span>{{row.Course}}</span></mat-cell>
     </ng-container>
+   
+    <ng-container matColumnDef="Options">
+       
+      <mat-header-cell *matHeaderCellDef></mat-header-cell>
+        <mat-cell *matCellDef="let row;let i=index">
+          <a (click)="assignHomework(row)"  *ngIf="isAdmin" >
+                <span class="glyphicon glyphicon-edit" style="cursor: pointer;"></span>
+              </a>
+        
+        </mat-cell>
+      </ng-container>
+    
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
     <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
 

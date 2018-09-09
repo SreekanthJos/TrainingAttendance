@@ -51,11 +51,12 @@ export class HomeworkService {
     }
     this.firebaseDB.collection(UrlConstants.EmpHomeworks).add(data);
   }
-  updateHomwork(homework: Homework, emphw: EmpHomework) {
+  updateHomework(homework: Homework, emphw: EmpHomework) {
     
     emphw.Hworks.push({ 'Name': homework.Name, 'Description':homework.Description,'Repo':'','HomeworkStatus':  'NotStarted' });
     this.firebaseDB.doc(`emphomeworks/${emphw.Id}`).update(emphw);
 
   }
+
 
 }

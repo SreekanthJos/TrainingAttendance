@@ -38,6 +38,8 @@ export class HomeworkComponent implements OnInit {
 
       this.empHomeworks = res;
       this.empHomeworks = this.empHomeworks.filter(emp => { if (emp.Name != "") { return emp; } })
+      
+      
     });
   }
   saveEmpHomework(emphw: EmpHomework) {

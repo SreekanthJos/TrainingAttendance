@@ -27,7 +27,7 @@ export class LoginService {
         if (user.Email.toLowerCase() == d.Email.toLowerCase() && user.Password == d.Password) {
 
           this.isAuthenticated = true;
-          if (user.Email.toLowerCase() == "siva" && user.Email.toLowerCase() == "naveen") {
+          if (user.Email.toLowerCase() == "siva" || user.Email.toLowerCase() == "naveen") {
             this.isAdmin = true;
           }
         }
