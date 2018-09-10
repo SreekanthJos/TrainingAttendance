@@ -33,6 +33,7 @@ export class CourseHomeworksComponent implements OnInit {
     this.getCourses();
     this.getCourseHomeworks();
     this.getEmployees();
+    this.getEmployeeHomeworks();
   }
 
   getEmployees() {
@@ -54,29 +55,41 @@ export class CourseHomeworksComponent implements OnInit {
       this.dataSource = new MatTableDataSource(this.courseHomeworks);
     });
   }
-
-  assignHomework(homework: Homework) {
-    console.log(homework);
-    debugger;
-    if (this.empHomeworks.length == 0) {
+  getEmployeeHomeworks() {
     this.hwService.getEmployeeHomeworks().subscribe(res => {
       this.empHomeworks = res as EmpHomework[];
-     // this.empHomeworks = this.empHomeworks.filter(emp => { if (emp.Name != "") { return emp; } })
-      if (this.empHomeworks.length === 1) {
-        this.employees.forEach(emp => {
-          this.hwService.assignHomeworkToAttendees(emp, homework);
-        });
-      }
-      else {
-      //  this.empHomeworks = res as EmpHomework[];
-      this.empHomeworks = this.empHomeworks.filter(emp => { if (emp.Name != "") { return emp; } });
-        this.empHomeworks.forEach(emphw => {
-          this.hwService.updateHomework(homework, emphw);
-        })
-      }
     });
+
   }
-}
+  assignHomework(homework: Homework) {
+    console.log(homework);
+
+    if (this.empHomeworks.length == 0 || this.empHomeworks.length === 1) {
+      // this.hwService.getEmployeeHomeworks().subscribe(res => {
+      //   this.empHomeworks = res as EmpHomework[];
+      // this.empHomeworks = this.empHomeworks.filter(emp => { if (emp.Name != "") { return emp; } })
+
+      this.employees.forEach(emp => {
+        this.hwService.assignHomeworkToAttendees(emp, homework);
+      });
+      //}
+      // });
+    }
+    else {
+      if (this.empHomeworks.length >= this.employees.length) {
+        //  this.empHomeworks = res as EmpHomework[];
+        this.empHomeworks = this.empHomeworks.filter(emp => { if (emp.Name != "") { return emp; } });
+        console.log(this.empHomeworks.length);
+         for (var index = 0; index < this.empHomeworks.length; index++) {
+           var element = this.empHomeworks[index];
+           let res=this.hwService.updateHomework(homework,element);
+           console.log(true);
+         }
+      }
+    }
+
+
+  }
 
   createHomework() {
     this.hwService.createHomework(this.homework).subscribe(res => {

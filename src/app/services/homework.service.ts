@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from 'angularfire2/firestore';
-import { EmpHomework, Homework,Employee } from '../models/attendance.model';
+import { EmpHomework, Homework, Employee } from '../models/attendance.model';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { UrlConstants } from '../models/url-constants.model';
@@ -14,7 +14,7 @@ export class HomeworkService {
     this.firebaseDB = af;
   }
   getEmployeeHomeworks(): Observable<EmpHomework[]> {
-    return this.emphomeworks = this.firebaseDB.collection<EmpHomework>("/emphomeworks").snapshotChanges().pipe(map(actions => actions.map(a => {
+    return this.emphomeworks = this.firebaseDB.collection<EmpHomework>('/' + UrlConstants.EmpHomeworks).snapshotChanges().pipe(map(actions => actions.map(a => {
       const data = a.payload.doc.data() as EmpHomework;
       const id = a.payload.doc.id;
       data.Id = id;
@@ -22,13 +22,12 @@ export class HomeworkService {
     }))
     );
   }
-  getCourseHomeworks():Observable<Homework[]>
-  {
+  getCourseHomeworks(): Observable<Homework[]> {
     return this.firebaseDB.collection<Homework>("/homeworks").valueChanges();
   }
-  saveEmpHomework(emphw: EmpHomework) {    
+  saveEmpHomework(emphw: EmpHomework) {
 
-    this.firebaseDB.doc(`emphomeworks/${emphw.Id}`).update(emphw);
+    this.firebaseDB.doc(`${UrlConstants.EmpHomeworks}/${emphw.Id}`).update(emphw);
   }
 
   createHomework(homework: Homework): Observable<boolean> {
@@ -42,7 +41,7 @@ export class HomeworkService {
   }
   assignHomeworkToAttendees(emp: Employee, homework: Homework) {
     let ar: any[] = new Array();
-    ar.push({ 'Name': homework.Name, 'Description':homework.Description,'Repo':'','HomeworkStatus': 'NotStarted' });
+    ar.push({ 'Name': homework.Name, 'Description': homework.Description, 'Repo': '', 'HomeworkStatus': 'NotStarted' });
     let data = {
       "Email": emp.Email,
       "Name": emp.Name,
@@ -51,11 +50,13 @@ export class HomeworkService {
     }
     this.firebaseDB.collection(UrlConstants.EmpHomeworks).add(data);
   }
-  updateHomework(homework: Homework, emphw: EmpHomework) {
-    
-    emphw.Hworks.push({ 'Name': homework.Name, 'Description':homework.Description,'Repo':'','HomeworkStatus':  'NotStarted' });
-    this.firebaseDB.doc(`emphomeworks/${emphw.Id}`).update(emphw);
+  updateHomework(homework: Homework, emphw: EmpHomework): boolean {
 
+    emphw.Hworks.push({ 'Name': homework.Name, 'Description': homework.Description, 'Repo': '', 'HomeworkStatus': 'NotStarted' });
+    this.firebaseDB.doc(`${UrlConstants.EmpHomeworks}/${emphw.Id}`).update(emphw).then(() => {
+      return true;
+    });
+    return false;
   }
 
 
