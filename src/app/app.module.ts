@@ -32,6 +32,7 @@ import { RegisterComponent } from './register/register.component'
 import { LoginService } from './services/login.service';
 import { CourseHomeworksComponent } from './course-homeworks/course-homeworks.component';
 import { OnlyLoggedInUsersGuard } from './services/authguards/only-logged-in-users-guard.service';
+import { ExportExcelService } from './services/exportExcelService';
 
 
 
@@ -87,7 +88,7 @@ const routes = [
 
   ],
   providers: [AngularFirestore, AttendanceService, HomeworkService,
-     HttpClient, LoginService, OnlyLoggedInUsersGuard],
+     HttpClient, LoginService, OnlyLoggedInUsersGuard,ExportExcelService],
   bootstrap: [AppComponent],
   entryComponents: [DialogComponent, CourseAttendanceComponent]
 })

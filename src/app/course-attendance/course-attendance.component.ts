@@ -7,6 +7,7 @@ import { MatDatepickerInputEvent } from '@angular/material';
 import { AttendanceService } from '../services/attendance.service'
 import { MatTableDataSource, MatSort } from '@angular/material';
 import { DataSource } from '@angular/cdk/table';
+import { ExportExcelService } from '../services/exportExcelService';
 @Component({
   selector: 'app-course-attendance',
   templateUrl: './course-attendance.component.html',
@@ -23,7 +24,7 @@ export class CourseAttendanceComponent implements OnInit {
   dataSource;
   displayedColumns = ['Course', 'Email', 'IsPresent', 'Name', 'SessionDate', 'Options'];
   // columns =['IsPresent', 'Name', 'Email', 'Course','SessionDate'];
-  constructor(private af: AngularFirestore, public service: AttendanceService) {
+  constructor(private af: AngularFirestore, public service: AttendanceService,private excelService:ExportExcelService) {
     //this.displayedColumns = ['IsPresent', 'Name', 'Email', 'Course','SessionDate'];
     this.firebaseDB = af;
     //this.columns=this.displayedColumns;
@@ -70,6 +71,11 @@ export class CourseAttendanceComponent implements OnInit {
     });
   }
 
+  exportAsXLSX()
+  {
+    this.excelService.exportAsExcelFile(this.attendees,'CourseAttendance');
+  }
+
   edit(atn: Attendees, i: number) {
     this.IsEdit = true;
     this.editIndex = i;
@@ -79,4 +85,5 @@ export class CourseAttendanceComponent implements OnInit {
     this.IsEdit = false;
     this.editIndex = -1;
   }
+
 }
